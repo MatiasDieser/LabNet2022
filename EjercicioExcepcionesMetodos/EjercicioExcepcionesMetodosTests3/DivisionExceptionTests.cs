@@ -20,8 +20,8 @@ namespace EjercicioExcepcionesMetodos.Tests
             decimal valorEsperado = 2;
 
             //act 
-            DivisionException.Division(dividendo, divisor);
-            decimal resultado = dividendo / divisor;
+            
+            decimal resultado = DivisionException.Division(dividendo, divisor);
 
             //assert
             Assert.AreEqual(valorEsperado, resultado);

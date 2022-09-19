@@ -9,12 +9,13 @@ namespace EjercicioExcepcionesMetodos
     public class DivisionException
     {
         
-        public static void Division(decimal dividendo, decimal divisor)
+        public static decimal Division(decimal dividendo, decimal divisor)
         {
             try
             {
-                decimal resultado = dividendo / divisor;
-                Console.WriteLine("El resultado de la división es : {0}", resultado);
+                decimal resultado = dividendo / divisor;               
+                Console.WriteLine(resultado);
+                return resultado;
             }
             catch (DivideByZeroException dex)
             {
@@ -27,9 +28,10 @@ namespace EjercicioExcepcionesMetodos
             }
             finally
             {
+                
                 Console.WriteLine("Operación finalizada");
             }
-            
+            return 0;
         }
 
     }
