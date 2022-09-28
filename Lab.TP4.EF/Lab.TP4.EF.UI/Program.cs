@@ -327,7 +327,7 @@ namespace Lab.TP4.EF.UI
                         Console.WriteLine("Ingrese el id del registro que desea eliminar:");
                         int idRegistro = int.Parse(Console.ReadLine());
                         EmployeesLogic employeesLogic = new EmployeesLogic();
-                        employeesLogic.Delete(idRegistro);                       
+                        employeesLogic.Delete(idRegistro);
                     }
                     catch (Exception ex)
                     {
@@ -357,7 +357,6 @@ namespace Lab.TP4.EF.UI
                         int idRegistro = int.Parse(Console.ReadLine());
                         CategoriesLogic categoriesLogic = new CategoriesLogic();
                         categoriesLogic.Delete(idRegistro);
-                        Console.WriteLine("Registro eliminado correctamente");
                     }
                     catch (Exception ex)
                     {

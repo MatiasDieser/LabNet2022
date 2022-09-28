@@ -32,6 +32,10 @@ namespace Lab.TP4.EF.Logic
                     NonExistentIdException.GetException();
                 }
             }
+            catch (System.Data.Entity.Infrastructure.DbUpdateException)
+            {
+                ForeignKeyException.GetException();
+            }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error:  {ex.Message}");

@@ -65,6 +65,7 @@
     <Compile Include="CategoriesLogic.cs" />
     <Compile Include="CustomersLogic.cs" />
     <Compile Include="EmployeesLogic.cs" />
+    <Compile Include="Exceptions\ForeignKeyException.cs" />
     <Compile Include="Exceptions\NonExistentIdException.cs" />
     <Compile Include="Exceptions\ObligatoryDataException.cs" />
     <Compile Include="ICrudLogic.cs" />
