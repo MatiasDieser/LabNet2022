@@ -58,9 +58,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Lab.TP4.EF.Entities\Lab.TP4.EF.Entities.csproj">
+    <ProjectReference Include="..\Lab.TP4.EF.Entities\Lab.TP7.Entities.csproj">
       <Project>{AFE2B5C7-49B7-4C59-8FF0-AB0376E46FA0}</Project>
-      <Name>Lab.TP4.EF.Entities</Name>
+      <Name>Lab.TP7.Entities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
