@@ -52,5 +52,28 @@ namespace Lab.TP4.EF.Logic
             context.Entry(customerUpdate).CurrentValues.SetValues(customer);
             context.SaveChanges();
         }
+
+        public Customers Find(int id)
+        {
+            try
+            {
+                return context.Customers.Find(id);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        public Customers Find(string id)
+        {
+            try
+            {
+                return context.Customers.Find(id);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
     }
 }

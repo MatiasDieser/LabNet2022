@@ -1,0 +1,41 @@
+﻿@model Lab.TP7.MVC.Models.EmployeesView
+@{
+    ViewBag.Title = "Update Page";
+}
+
+<header>
+    <link rel="stylesheet" type="text/css" href="~/PersonalizedCss/HomeStyle.css" />
+</header>
+<h1>Empleados</h1>
+
+@using (Html.BeginForm("InsertUpdate", "Employees", FormMethod.Post))
+{
+    
+    <div>
+        
+        <small>Los campos marcados con un * son obligatorios</small><br />
+        <div>
+            <label style="font-size : large">*Nombre: </label><br />
+            @Html.HiddenFor(e => e.Id)
+            @Html.EditorFor(e => e.FirstName, "", new { @class = "form-control" })
+            @Html.ValidationMessageFor(e => e.FirstName, null, new { @class = "red" })
+            <br>
+        </div>
+        <div>
+            <label style="font-size : large">*Apellido: </label> <br />
+            @Html.HiddenFor(e => e.Id)
+            @Html.EditorFor(e => e.LastName, "", new { @class = "form-control" })
+            @Html.ValidationMessageFor(e => e.LastName, null, new { @class = "red" })
+            <br>
+        </div>
+        <div>
+            <label style="font-size : large">Título: </label> <br />
+            @Html.HiddenFor(e => e.Id)
+            @Html.EditorFor(e => e.Title, "", new { @class = "form-control" })
+        </div>
+        <br />
+        <div>
+            <input type="submit" class="btn btn-success" value="Guardar" />
+        </div>
+    </div>
+}

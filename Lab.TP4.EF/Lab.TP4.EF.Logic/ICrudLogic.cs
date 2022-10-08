@@ -12,5 +12,7 @@ namespace Lab.TP4.EF.Logic
         void Add(T newEntitie);
         void Update(T newEntitie);
         void Delete(int id);
+
+        T Find(int id);
     }
 }

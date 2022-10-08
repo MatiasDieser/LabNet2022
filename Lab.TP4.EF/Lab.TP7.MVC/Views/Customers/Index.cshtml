@@ -1,0 +1,38 @@
+﻿@model List<Lab.TP7.MVC.Models.CustomersView>
+@{
+    ViewBag.Title = "Customers Page";
+}
+
+<header>
+    <link rel="stylesheet" type="text/css" href="~/PersonalizedCss/HomeStyle.css" />
+</header>
+<h1>Customers</h1>
+
+<table class="table table-striped table-dark">
+    <thead>
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Compañía</th>
+        <th scope="col">Contacto</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+
+    @foreach (var customer in Model)
+    {
+        <thead>
+            <tr>
+                <td>@customer.Id</td>
+                <td>@customer.Company</td>
+                <td>@customer.ContactName</td>
+                <td>@Html.ActionLink("Borrar", "Delete", new { id = customer.Id })</td>
+                <td>@Html.ActionLink("Modificar", "Update", new { id = customer.Id })</td>
+            </tr>
+        </thead>
+    }
+
+
+</table>
+<br>
+<div>@Html.ActionLink("Agregar customer", "Insert", "Customers")</div>

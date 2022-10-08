@@ -79,5 +79,16 @@ namespace Lab.TP4.EF.Logic
         {
 
         }
+
+        public Shippers Find(int id)
+        {
+            try
+            {
+                return context.Shippers.Find(id);
+            }catch(Exception)
+            {
+                return null;
+            }
+        }
     }
 }

@@ -1,0 +1,39 @@
+﻿@model List<Lab.TP7.MVC.Models.ShippersView>
+@{
+    ViewBag.Title = "Shippers Page";
+}
+
+<header>
+    <link rel="stylesheet" type="text/css" href="~/PersonalizedCss/HomeStyle.css" />
+</header>
+<h1>Shippers</h1>
+
+<table class="table table-striped table-dark">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Teléfono</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+
+    @foreach (var shippers in Model)
+    {
+        <thead>
+        <tr>
+            <td>@shippers.Id</td>
+            <td>@shippers.Name</td>
+            <td>@shippers.Phone</td>
+            <td>@Html.ActionLink("Borrar", "Delete", new { id = shippers.Id })</td>
+            <td>@Html.ActionLink("Modificar", "Update", new { id = shippers.Id })</td>
+        </tr>
+        </thead>
+    }
+
+
+</table>
+<br>
+<div>@Html.ActionLink("Agregar shipper", "Insert", "Shippers")</div>
+

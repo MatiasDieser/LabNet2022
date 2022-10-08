@@ -69,5 +69,17 @@ namespace Lab.TP4.EF.Logic
                 Console.WriteLine($"{ex.Message}");
             }
         }
+
+        public Categories Find(int id)
+        {
+            try
+            {
+                return context.Categories.Find(id);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
     }
 }

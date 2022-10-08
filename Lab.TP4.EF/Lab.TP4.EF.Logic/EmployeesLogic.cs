@@ -69,5 +69,16 @@ namespace Lab.TP4.EF.Logic
                 Console.WriteLine($"Error:  {ex.Message}");
             }
         }
+
+        public Employees Find(int id)
+        {
+            try
+            {
+                return context.Employees.Find(id);
+            }catch(Exception)
+            {
+                return null;
+            }
+        }
     }
 }

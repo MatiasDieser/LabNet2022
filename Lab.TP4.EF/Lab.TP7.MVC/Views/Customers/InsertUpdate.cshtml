@@ -1,0 +1,44 @@
+﻿@model Lab.TP7.MVC.Models.CustomersView
+@{
+    ViewBag.Title = "Insert Page";
+}
+
+<header>
+    <link rel="stylesheet" type="text/css" href="~/PersonalizedCss/HomeStyle.css" />
+</header>
+<h1>Customer</h1>
+
+@using (Html.BeginForm("InsertUpdate", "Customers", FormMethod.Post))
+{
+    <div>
+        <small>Los campos marcados con un * son obligatorios</small><br />
+        <div>
+            <label style="font-size : large">*Id (5 letras):</label>
+            <br>
+            
+            @Html.EditorFor(c => c.Id, "", new { @class = "form-control" })
+            @Html.ValidationMessageFor(c => c.Id, null, new { @class = "red" })
+            <br>
+        </div>
+        <div>
+            <label style="font-size : large">*Nombre de la compañía:</label>
+            <br>
+            @Html.HiddenFor(c => c.Id)
+            @Html.EditorFor(c => c.Company, "", new { @class = "form-control" })
+            @Html.ValidationMessageFor(c => c.Company, null, new { @class = "red" })
+            <br>
+        </div>
+        <div>
+            <label style="font-size : large">Nombre de contacto:</label>
+            <br>
+            @Html.HiddenFor(c => c.Id)
+            @Html.EditorFor(c => c.ContactName, "", new { @class = "form-control" })
+            <br />
+        </div>
+        <br />
+        <div style="text-align:left">
+            <br>
+            <input type="submit" class="btn btn-success" value="Guardar" />
+        </div>
+    </div>
+}

@@ -1,0 +1,38 @@
+﻿@model Lab.TP7.MVC.Models.ShippersView
+@{
+    ViewBag.Title = "Update Page";
+}
+
+<header>
+    <link rel="stylesheet" type="text/css" href="~/PersonalizedCss/HomeStyle.css" />
+</header>
+<h1>Shipper</h1>
+
+@using (Html.BeginForm("InsertUpdate", "Shippers", FormMethod.Post))
+{
+
+    <div>
+        <small>Los campos marcados con un * son obligatorios</small><br />
+        <div>
+            <label style="font-size : large">*Nombre de la compañía:</label>
+            <br>
+            @Html.HiddenFor(s => s.Id)
+            @Html.EditorFor(s => s.Name, "", new { @class = "form-control" })
+            @Html.ValidationMessageFor(s => s.Name, null, new { @class = "red" })
+            <br>
+        </div>
+        <div>
+            <label style="font-size : large">Teléfono:</label>
+            <br>
+            @Html.HiddenFor(s => s.Id)
+            @Html.EditorFor(s => s.Phone, "", new { @class = "form-control" })
+            <br />
+        </div>
+        <br />
+        <div style="text-align:left">
+            <br>
+            <input type="submit" class="btn btn-success" value="Guardar" />
+        </div>
+    </div>
+}
+
