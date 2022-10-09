@@ -152,6 +152,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="PersonalizedCss\404ErrorStyle.css" />
     <Content Include="PersonalizedCss\HomeStyle.css" />
+    <Content Include="PersonalizedCss\LayoutStyle.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
@@ -208,13 +209,13 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Lab.TP4.EF.Entities\Lab.TP7.Entities.csproj">
+    <ProjectReference Include="..\Lab.TP4.EF.Entities\Lab.TP8.Entities.csproj">
       <Project>{afe2b5c7-49b7-4c59-8ff0-ab0376e46fa0}</Project>
-      <Name>Lab.TP7.Entities</Name>
+      <Name>Lab.TP8.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Lab.TP4.EF.Logic\Lab.TP7.Logic.csproj">
+    <ProjectReference Include="..\Lab.TP4.EF.Logic\Lab.TP8.Logic.csproj">
       <Project>{43bd69c3-61c0-44bf-966c-39dfcabc523d}</Project>
-      <Name>Lab.TP7.Logic</Name>
+      <Name>Lab.TP8.Logic</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
