@@ -1,5 +1,5 @@
-﻿using Lab.TP4.EF.Entities;
-using Lab.TP4.EF.Logic;
+﻿using Lab.TP8.EF.Entities;
+using Lab.TP8.EF.Logic;
 using Lab.TP7.MVC.Models;
 using System;
 using System.Collections.Generic;

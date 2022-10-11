@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Lab.TP4.EF.Entities;
-using Lab.TP4.EF.Logic;
+using Lab.TP8.EF.Entities;
+using Lab.TP8.EF.Logic;
 using Lab.TP7.MVC.Models;
 
 namespace Lab.TP7.MVC.Controllers

@@ -1,11 +1,11 @@
-using Lab.TP4.EF.Entities;
+using Lab.TP8.EF.Entities;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
 
 
-namespace Lab.TP4.EF.Datos
+namespace Lab.TP8.EF.Datos
 {
     public partial class NorthwindContext : DbContext
     {
@@ -30,5 +30,7 @@ namespace Lab.TP4.EF.Datos
                 .WithOptional(e => e.Employees2)
                 .HasForeignKey(e => e.ReportsTo);
         }
+
+        
     }
 }

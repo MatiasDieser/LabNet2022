@@ -1,14 +1,14 @@
-﻿using Lab.TP4.EF.Entities;
+﻿using Lab.TP8.EF.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Lab.TP4.EF.Logic.Exceptions;
+using Lab.TP8.EF.Logic.Exceptions;
 using System.Threading.Tasks;
 using Moq;
-using Lab.TP4.EF.Datos;
+using Lab.TP8.EF.Datos;
 
-namespace Lab.TP4.EF.Logic
+namespace Lab.TP8.EF.Logic
 {
     public class ShippersLogic : BaseLogic, ICrudLogic<Shippers>
     {

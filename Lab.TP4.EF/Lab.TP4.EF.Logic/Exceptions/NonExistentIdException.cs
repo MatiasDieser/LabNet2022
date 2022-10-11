@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lab.TP4.EF.Logic.Exceptions
+namespace Lab.TP8.EF.Logic.Exceptions
 {
     
     public class NonExistentIdException : Exception

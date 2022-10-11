@@ -1,0 +1,90 @@
+﻿@{
+    ViewBag.Title = "Razas Page";
+}
+<header>
+    <link rel="stylesheet" type="text/css" href="~/PersonalizedCss/HomeStyle.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Josefin+Sans" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</header>
+<body>
+    <h1>Api CatFacts</h1>
+    <div class="bigbox">
+        <div class="bigcard">
+            <h5>Lista 1:</h5><br />
+            <div class="bigpra">
+                <p>Raza: @Model.data[0].breed</p>
+                <p>País: @Model.data[0].country</p>
+                <p>Origen: @Model.data[0].origin</p>
+                <p>Cola: @Model.data[0].coat</p>
+                <p>Patrón de colores: @Model.data[0].pattern</p><br />
+                <br /><p></p>
+            </div>
+        </div>
+    </div>
+    <div class="bigbox">
+        <div class="bigcard">
+            <h5>Lista 2:</h5><br />
+            <div class="bigpra">
+                <p>Raza: @Model.data[1].breed</p>
+                <p>País: @Model.data[1].country</p>
+                <p>Origen: @Model.data[1].origin</p>
+                <p>Cola: @Model.data[1].coat</p>
+                <p>Patrón de colores: @Model.data[1].pattern</p><br />
+                <br /><p></p>
+            </div>
+        </div>
+    </div>
+    <div class="bigbox">
+        <div class="bigcard">
+            <h5>Lista 3:</h5><br />
+            <div class="bigpra">
+                <p>Raza: @Model.data[2].breed</p>
+                <p>País: @Model.data[2].country</p>
+                <p>Origen: @Model.data[2].origin</p>
+                <p>Cola: @Model.data[2].coat</p>
+                <p>Patrón de colores: @Model.data[2].pattern</p><br />
+                <br /><p></p>
+            </div>
+        </div>
+    </div>
+    <div class="bigbox">
+        <div class="bigcard">
+            <h5>Lista 4:</h5><br />
+            <div class="bigpra">
+                <p>Raza: @Model.data[3].breed</p>
+                <p>País: @Model.data[3].country</p>
+                <p>Origen: @Model.data[3].origin</p>
+                <p>Cola: @Model.data[3].coat</p>
+                <p>Patrón de colores: @Model.data[3].pattern</p><br />
+                <br /><p></p>
+            </div>
+        </div>
+    </div>
+    <div class="box">
+        <div class="card">
+            <i class="fa-solid fa-cat"></i>
+            <h5>CatFact</h5>
+            <div class="pra">
+                <p>Dato Random</p>
+                <p style="text-align:center;">
+                    <br />
+                    <a class="button" href="~/Api/Index">Inicio</a>
+                </p>
+            </div>
+        </div>
+        <div class="card">
+            <i class="fa-solid fa-paw"></i>
+            <h5>Lista de datos</h5>
+            <div class="pra">
+                <p>Ver varios datos a la vez</p>
+                <p style="text-align:center;">
+                    <br />
+                    <a class="button" href="~/Api/ListOfFacts">Ver</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>

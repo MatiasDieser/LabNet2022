@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewBag.Title = "Api Page";
+}
+<header>
+    <link rel="stylesheet" type="text/css" href="~/PersonalizedCss/HomeStyle.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Josefin+Sans" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</header>
+<body>
+    <h1>Api CatFacts</h1>
+    <div class="bigbox">
+        <div class="bigcard">
+            <h5>Sobre la API</h5><br />
+            <div class="bigpra">
+                <p>La API "CatFacts" devuelve datos random sobre gatos, así como también listas de datos o información sobre razas.</p>
+                <br />
+                <br /><p>A continuación, podrás ver los diferentes EndPoints que ofrece esta Api:</p>
+            </div>
+        </div>
+    </div>
+    <div class="box">
+        
+            <div class="card">
+                <i class="fa-solid fa-cat"></i>
+                <h5>CatFact</h5>
+                <div class="pra">
+                    <p>@Model.fact</p>
+                    <p style="text-align:center;">
+                        <br />
+                        <a class="button" href="~/Api/Index">Cambiar Dato</a>
+                    </p>
+                </div>
+            </div>
+
+        
+        
+            <div class="card">
+                <i class="fa-solid fa-paw"></i>
+                <h5>Lista de datos</h5>
+                <div class="pra">
+                    <p>Ver varios datos a la vez</p>
+                    <p style="text-align:center;">
+                        <br />
+                        <a class="button" href="~/Api/ListOfFacts">Ver</a>
+                    </p>
+                </div>
+            </div>
+
+        
+        
+            <div class="card">
+                <i class="fa-solid fa-shield-cat"></i>
+                <h5>Razas + Datos</h5>
+                <div class="pra">
+                    <p>Datos sobre razas</p>
+                    <p style="text-align:center;">
+                        <br />
+                        <a class="button" href="~/Api/Razas">Ver</a>
+                    </p>
+                </div>
+            </div>
+
+        
+    </div>
+</body>
+
+
+
+
+
