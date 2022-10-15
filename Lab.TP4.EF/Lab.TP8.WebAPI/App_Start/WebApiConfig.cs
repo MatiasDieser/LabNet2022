@@ -12,9 +12,10 @@ namespace Lab.TP8.WebAPI
         {
 
             // Web API configuration and services
-
+            var cors = new EnableCorsAttribute(origins: "*", headers: "*", methods: "*");
+            config.EnableCors(cors);
             // Web API routes
-            config.EnableCors();
+
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(

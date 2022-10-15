@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Lab.TP7.MVC.Models;
 using Lab.TP8.EF.Datos;
 using Lab.TP8.EF.Entities;
 
@@ -19,22 +20,46 @@ namespace Lab.TP8.WebAPI.Controllers
         private NorthwindContext db = new NorthwindContext();
 
         // GET: api/Customers
-        public IQueryable<Customers> GetCustomers()
+        public IHttpActionResult GetCustomers()
         {
-            return db.Customers;
-        }
+            List<Customers> customers = db.Customers.ToList();
 
-        // GET: api/Customers/5
-        [ResponseType(typeof(Customers))]
-        public async Task<IHttpActionResult> GetCustomers(string id)
-        {
-            Customers customers = await db.Customers.FindAsync(id);
             if (customers == null)
             {
                 return NotFound();
             }
+            else
+            {
+                List<CustomersView> customersView = customers.Select(c => new CustomersView
+                {
+                    Id = c.CustomerID,
+                    Company = c.CompanyName,
+                    ContactName = c.ContactName
+                }).ToList();
 
-            return Ok(customers);
+                return Ok(customersView);
+            }
+        }
+
+        // GET: api/Customers/5
+        [ResponseType(typeof(Customers))]
+        public IHttpActionResult GetCustomers(string id)
+        {
+            Customers customer = db.Customers.Find(id);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var customerOk = new CustomersView
+                {
+                    Id = customer.CustomerID,
+                    Company = customer.CompanyName,
+                    ContactName = customer.ContactName
+                };
+                return Ok(customerOk);
+            }
         }
 
         // PUT: api/Customers/5
