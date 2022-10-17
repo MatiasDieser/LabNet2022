@@ -12,7 +12,7 @@ using System.Net.Http.Headers;
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Lab.TP8.EF.Entities;
-using Lab.TP8.Services;
+
 
 namespace Lab.TP7.MVC.Controllers
 {
@@ -67,11 +67,6 @@ namespace Lab.TP7.MVC.Controllers
                 }
             }
         }
-        ShippersService _service = new ShippersService();
-        public async Task<IActionResult> PruebaShippers()
-        {
-            IEnumerable<Shippers> shippers = await _service.GetAll();
-            return (IActionResult)View("PruebaShippers", shippers);
-        }
+        
     }
 }

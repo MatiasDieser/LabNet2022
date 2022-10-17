@@ -9,53 +9,89 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Lab.TP7.MVC.Models;
 using Lab.TP8.EF.Datos;
 using Lab.TP8.EF.Entities;
+using Lab.TP8.EF.Logic;
 
 namespace Lab.TP8.WebAPI.Controllers
 {
     public class ShippersController : ApiController
     {
-        private NorthwindContext db = new NorthwindContext();
+        private readonly ShippersLogic shippersLogic = new ShippersLogic();
 
         // GET: api/Shippers
-        public IQueryable<Shippers> GetShippers()
+        public IHttpActionResult GetShippers()
         {
-            return db.Shippers;
+            try
+            {
+                if (shippersLogic.GetAll() == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    List<ShippersView> shippersView = shippersLogic.GetAll().Select(s => new ShippersView
+                    {
+                        Id = s.ShipperID,
+                        Name = s.CompanyName,
+                        Phone = s.Phone
+                    }).ToList();
+
+                    return Ok(shippersView);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
+            }
         }
 
         // GET: api/Shippers/5
         [ResponseType(typeof(Shippers))]
-        public async Task<IHttpActionResult> GetShippers(int id)
+        public IHttpActionResult GetShippers(int id)
         {
-            Shippers shippers = await db.Shippers.FindAsync(id);
-            if (shippers == null)
+            try
             {
-                return NotFound();
+                var shipper = shippersLogic.Find(id);
+                if (shipper == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    var shipperOk = new ShippersView
+                    {
+                        Id = shipper.ShipperID,
+                        Name = shipper.CompanyName,
+                        Phone = shipper.Phone
+                    };
+                    return Ok(shipperOk);
+                }
             }
-
-            return Ok(shippers);
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
+            }
         }
 
         // PUT: api/Shippers/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutShippers(int id, Shippers shippers)
+        public IHttpActionResult PutShippers(int id, Shippers shippers)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            if (id != shippers.ShipperID)
+            if (!ShippersExists(id))
             {
-                return BadRequest();
+                return NotFound();
             }
-
-            db.Entry(shippers).State = EntityState.Modified;
+            shippers.ShipperID = id;
 
             try
             {
-                await db.SaveChangesAsync();
+                shippersLogic.Update(shippers);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -68,53 +104,53 @@ namespace Lab.TP8.WebAPI.Controllers
                     throw;
                 }
             }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
+            }
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
         // POST: api/Shippers
         [ResponseType(typeof(Shippers))]
-        public async Task<IHttpActionResult> PostShippers(Shippers shippers)
+        public IHttpActionResult PostShippers(Shippers shippers)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Shippers.Add(shippers);
-            await db.SaveChangesAsync();
+            try 
+            { 
+                shippersLogic.Add(shippers); 
+            }
+            catch(Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
+            }
 
             return CreatedAtRoute("DefaultApi", new { id = shippers.ShipperID }, shippers);
         }
 
         // DELETE: api/Shippers/5
         [ResponseType(typeof(Shippers))]
-        public async Task<IHttpActionResult> DeleteShippers(int id)
+        public IHttpActionResult DeleteShippers(int id)
         {
-            Shippers shippers = await db.Shippers.FindAsync(id);
+            Shippers shippers = shippersLogic.Find(id);
             if (shippers == null)
             {
                 return NotFound();
             }
 
-            db.Shippers.Remove(shippers);
-            await db.SaveChangesAsync();
+            shippersLogic.Delete(id);
 
             return Ok(shippers);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         private bool ShippersExists(int id)
         {
-            return db.Shippers.Count(e => e.ShipperID == id) > 0;
+            return shippersLogic.GetAll().Count(e => e.ShipperID == id) > 0;
         }
     }
 }

@@ -11,92 +11,96 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Lab.TP8.EF.Datos;
 using Lab.TP8.EF.Entities;
+using Lab.TP8.EF.Logic;
 using Lab.TP8.WebAPI.Models;
 
 namespace Lab.TP8.WebAPI.Controllers
 {
     public class EmployeesController : ApiController
     {
-        private NorthwindContext db = new NorthwindContext();
+        private readonly EmployeesLogic employeesLogic = new EmployeesLogic();
+        
 
         //GET: api/Employees
         [HttpGet]
 
         public IHttpActionResult GetEmployees()
         {
-            List<Employees> employees = db.Employees.ToList();
-
-            if (employees == null)
+            try
             {
-                return NotFound();
-            }
-            else
-            {
-                List<EmployeesView> employeesView = employees.Select(e => new EmployeesView
+                if (employeesLogic.GetAll() == null)
                 {
-                    Id = e.EmployeeID,
-                    FirstName = e.FirstName,
-                    LastName = e.LastName,
-                    Title = e.Title
-                }).ToList();
+                    return NotFound();
+                }
+                else
+                {
+                    List<EmployeesView> employeesView = employeesLogic.GetAll().Select(e => new EmployeesView
+                    {
+                        Id = e.EmployeeID,
+                        FirstName = e.FirstName,
+                        LastName = e.LastName,
+                        Title = e.Title
+                    }).ToList();
 
-                return Ok(employeesView);
+                    return Ok(employeesView);
+                }
+            }catch(Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
             }
+            
         }
 
         //GET: api/Employees/5
         [ResponseType(typeof(Employees))]
         public IHttpActionResult GetByID(int id)
         {
-            Employees employee = db.Employees.Find(id);
-            if (employee == null)
+            try
             {
-                return NotFound();
-            }
-            else
-            {
-                var employeeOk = new EmployeesView
+                var employee = employeesLogic.Find(id);
+                if (employee == null)
                 {
-                    Id = employee.EmployeeID,
-                    FirstName = employee.FirstName,
-                    LastName = employee.LastName,
-                    Title = employee.Title
-                };
-                return Ok(employeeOk);
+                    return NotFound();
+                }
+                else
+                {
+                    var employeeOk = new EmployeesView
+                    {
+                        Id = employee.EmployeeID,
+                        FirstName = employee.FirstName,
+                        LastName = employee.LastName,
+                        Title = employee.Title
+                    };
+                    return Ok(employeeOk);
+                }
+            }catch(Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
             }
 
         }
 
         // PUT: api/Employees/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutEmployees(int id, Employees employees)
+        public IHttpActionResult PutEmployees(int id, Employees employees)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            if (id != employees.EmployeeID)
+            
+            if (!EmployeesExists(id))
             {
-                return BadRequest();
+                return NotFound();
             }
-
-            db.Entry(employees).State = EntityState.Modified;
-
+            employees.EmployeeID = id;
             try
             {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
+                employeesLogic.Update(employees);
+            }        
+            catch(Exception ex)
             {
-                if (!EmployeesExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return Content(HttpStatusCode.BadRequest, ex.Message);
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -104,47 +108,52 @@ namespace Lab.TP8.WebAPI.Controllers
 
         // POST: api/Employees
         [ResponseType(typeof(Employees))]
-        public async Task<IHttpActionResult> PostEmployees(Employees employees)
+        public IHttpActionResult PostEmployees(Employees employees)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Employees.Add(employees);
-            await db.SaveChangesAsync();
+            try
+            {
+                employeesLogic.Add(employees);
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
+            }
 
             return CreatedAtRoute("DefaultApi", new { id = employees.EmployeeID }, employees);
         }
 
         // DELETE: api/Employees/5
         [ResponseType(typeof(Employees))]
-        public async Task<IHttpActionResult> DeleteEmployees(int id)
+        public IHttpActionResult DeleteEmployees(int id)
         {
-            Employees employees = await db.Employees.FindAsync(id);
+            Employees employees = employeesLogic.Find(id);
             if (employees == null)
             {
                 return NotFound();
             }
 
-            db.Employees.Remove(employees);
-            await db.SaveChangesAsync();
+            try
+            {
+                employeesLogic.Delete(id);
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
+            }
 
             return Ok(employees);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+       
 
         private bool EmployeesExists(int id)
         {
-            return db.Employees.Count(e => e.EmployeeID == id) > 0;
+            return employeesLogic.GetAll().Count(e => e.EmployeeID == id) > 0;
         }
     }
 }

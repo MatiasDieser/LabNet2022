@@ -13,8 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab.TP8.MVC", "Lab.TP7.MVC\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab.TP8.WebAPI", "Lab.TP8.WebAPI\Lab.TP8.WebAPI.csproj", "{DCB81F5F-ABCD-40CC-A101-A9235B6A1708}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab.TP8.Services", "Lab.TP8.Services\Lab.TP8.Services.csproj", "{CC16B843-61A9-4F49-B202-6200899278DA}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,10 +39,6 @@ Global
 		{DCB81F5F-ABCD-40CC-A101-A9235B6A1708}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCB81F5F-ABCD-40CC-A101-A9235B6A1708}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCB81F5F-ABCD-40CC-A101-A9235B6A1708}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CC16B843-61A9-4F49-B202-6200899278DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CC16B843-61A9-4F49-B202-6200899278DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CC16B843-61A9-4F49-B202-6200899278DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CC16B843-61A9-4F49-B202-6200899278DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

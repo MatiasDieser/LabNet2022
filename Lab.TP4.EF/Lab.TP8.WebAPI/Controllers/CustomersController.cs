@@ -12,32 +12,38 @@ using System.Web.Http.Description;
 using Lab.TP7.MVC.Models;
 using Lab.TP8.EF.Datos;
 using Lab.TP8.EF.Entities;
+using Lab.TP8.EF.Logic;
 
 namespace Lab.TP8.WebAPI.Controllers
 {
     public class CustomersController : ApiController
     {
-        private NorthwindContext db = new NorthwindContext();
+        private readonly CustomersLogic customersLogic = new CustomersLogic();
 
         // GET: api/Customers
         public IHttpActionResult GetCustomers()
         {
-            List<Customers> customers = db.Customers.ToList();
-
-            if (customers == null)
+            try
             {
-                return NotFound();
-            }
-            else
-            {
-                List<CustomersView> customersView = customers.Select(c => new CustomersView
+                if (customersLogic.GetAll() == null)
                 {
-                    Id = c.CustomerID,
-                    Company = c.CompanyName,
-                    ContactName = c.ContactName
-                }).ToList();
+                    return NotFound();
+                }
+                else
+                {
+                    List<CustomersView> customersView = customersLogic.GetAll().Select(c => new CustomersView
+                    {
+                        Id = c.CustomerID,
+                        Company = c.CompanyName,
+                        ContactName = c.ContactName
+                    }).ToList();
 
-                return Ok(customersView);
+                    return Ok(customersView);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
             }
         }
 
@@ -45,53 +51,50 @@ namespace Lab.TP8.WebAPI.Controllers
         [ResponseType(typeof(Customers))]
         public IHttpActionResult GetCustomers(string id)
         {
-            Customers customer = db.Customers.Find(id);
-            if (customer == null)
+            try
             {
-                return NotFound();
-            }
-            else
-            {
-                var customerOk = new CustomersView
+                var customer = customersLogic.Find(id);
+                if (customer == null)
                 {
-                    Id = customer.CustomerID,
-                    Company = customer.CompanyName,
-                    ContactName = customer.ContactName
-                };
-                return Ok(customerOk);
+                    return NotFound();
+                }
+                else
+                {
+                    var customerOk = new CustomersView
+                    {
+                        Id = customer.CustomerID,
+                        Company = customer.CompanyName,
+                        ContactName = customer.ContactName
+                    };
+                    return Ok(customerOk);
+                }
+            }catch(Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
             }
         }
 
         // PUT: api/Customers/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutCustomers(string id, Customers customers)
+        public IHttpActionResult PutCustomers(string id, Customers customers)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != customers.CustomerID)
+            if (!CustomersExists(id))
             {
-                return BadRequest();
+                return NotFound();
             }
-
-            db.Entry(customers).State = EntityState.Modified;
-
+            customers.CustomerID = id;
             try
             {
-                await db.SaveChangesAsync();
+                customersLogic.Update(customers);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!CustomersExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return Content(HttpStatusCode.BadRequest, ex.Message);
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -106,11 +109,9 @@ namespace Lab.TP8.WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Customers.Add(customers);
-
             try
             {
-                await db.SaveChangesAsync();
+                customersLogic.Add(customers);
             }
             catch (DbUpdateException)
             {
@@ -122,6 +123,9 @@ namespace Lab.TP8.WebAPI.Controllers
                 {
                     throw;
                 }
+            }catch(Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
             }
 
             return CreatedAtRoute("DefaultApi", new { id = customers.CustomerID }, customers);
@@ -129,32 +133,31 @@ namespace Lab.TP8.WebAPI.Controllers
 
         // DELETE: api/Customers/5
         [ResponseType(typeof(Customers))]
-        public async Task<IHttpActionResult> DeleteCustomers(string id)
+        public IHttpActionResult DeleteCustomers(string id)
         {
-            Customers customers = await db.Customers.FindAsync(id);
+            Customers customers = customersLogic.Find(id);
+            
             if (customers == null)
             {
                 return NotFound();
             }
 
-            db.Customers.Remove(customers);
-            await db.SaveChangesAsync();
+            try
+            {
+                customersLogic.DeleteByString(id);
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
+            }
 
             return Ok(customers);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
 
         private bool CustomersExists(string id)
         {
-            return db.Customers.Count(e => e.CustomerID == id) > 0;
+            return customersLogic.GetAll().Count(e => e.CustomerID == id) > 0;
         }
     }
 }

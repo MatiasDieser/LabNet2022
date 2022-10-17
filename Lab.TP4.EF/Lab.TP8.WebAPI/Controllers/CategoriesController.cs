@@ -9,64 +9,93 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Lab.TP7.MVC.Models;
 using Lab.TP8.EF.Datos;
 using Lab.TP8.EF.Entities;
+using Lab.TP8.EF.Logic;
 
 namespace Lab.TP8.WebAPI.Controllers
 {
     public class CategoriesController : ApiController
     {
-        private NorthwindContext db = new NorthwindContext();
+        private readonly CategoriesLogic categoriesLogic = new CategoriesLogic();
 
         // GET: api/Categories
-        public IQueryable<Categories> GetCategories()
+        public IHttpActionResult GetCategories()
         {
-            return db.Categories;
+            try
+            {
+                if (categoriesLogic.GetAll() == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    List<CategoriesView> categoriesView = categoriesLogic.GetAll().Select(c => new CategoriesView
+                    {
+                        Id = c.CategoryID,
+                        Name = c.CategoryName,
+                        Description = c.Description
+                    }).ToList();
+
+                    return Ok(categoriesView);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
+            }
         }
 
         // GET: api/Categories/5
         [ResponseType(typeof(Categories))]
-        public async Task<IHttpActionResult> GetCategories(int id)
+        public IHttpActionResult GetCategories(int id)
         {
-            Categories categories = await db.Categories.FindAsync(id);
-            if (categories == null)
+            try
             {
-                return NotFound();
+                var categorie = categoriesLogic.Find(id);
+                if (categorie == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    var categorieOk = new CategoriesView
+                    {
+                        Id = categorie.CategoryID,
+                        Name = categorie.CategoryName,
+                        Description = categorie.Description
+                    };
+                    return Ok(categorieOk);
+                }
             }
-
-            return Ok(categories);
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
+            }
         }
 
         // PUT: api/Categories/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutCategories(int id, Categories categories)
+        public IHttpActionResult PutCategories(int id, Categories categories)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != categories.CategoryID)
+            if (!CategoriesExists(id))
             {
-                return BadRequest();
+                return NotFound();
             }
-
-            db.Entry(categories).State = EntityState.Modified;
-
+            categories.CategoryID = id;
             try
             {
-                await db.SaveChangesAsync();
+                categoriesLogic.Update(categories);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!CategoriesExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return Content(HttpStatusCode.BadRequest, ex.Message);
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -74,47 +103,51 @@ namespace Lab.TP8.WebAPI.Controllers
 
         // POST: api/Categories
         [ResponseType(typeof(Categories))]
-        public async Task<IHttpActionResult> PostCategories(Categories categories)
+        public IHttpActionResult PostCategories(Categories categories)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Categories.Add(categories);
-            await db.SaveChangesAsync();
+            try
+            {
+                categoriesLogic.Add(categories);
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
+            }
 
             return CreatedAtRoute("DefaultApi", new { id = categories.CategoryID }, categories);
         }
 
         // DELETE: api/Categories/5
         [ResponseType(typeof(Categories))]
-        public async Task<IHttpActionResult> DeleteCategories(int id)
+        public IHttpActionResult DeleteCategories(int id)
         {
-            Categories categories = await db.Categories.FindAsync(id);
+            Categories categories = categoriesLogic.Find(id);
             if (categories == null)
             {
                 return NotFound();
             }
 
-            db.Categories.Remove(categories);
-            await db.SaveChangesAsync();
+            try
+            {
+                categoriesLogic.Delete(id);
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
+            }
 
             return Ok(categories);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
 
         private bool CategoriesExists(int id)
         {
-            return db.Categories.Count(e => e.CategoryID == id) > 0;
+            return categoriesLogic.GetAll().Count(e => e.CategoryID == id) > 0;
         }
     }
 }

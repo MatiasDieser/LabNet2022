@@ -320,10 +320,6 @@
       <Project>{43bd69c3-61c0-44bf-966c-39dfcabc523d}</Project>
       <Name>Lab.TP8.Logic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Lab.TP8.Services\Lab.TP8.Services.csproj">
-      <Project>{CC16B843-61A9-4F49-B202-6200899278DA}</Project>
-      <Name>Lab.TP8.Services</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
