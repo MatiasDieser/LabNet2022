@@ -1,0 +1,35 @@
+<div class="card-box">
+  
+  <div class="row">
+    <div class="table-responsive">
+
+      <table class="table table-bordered" id="datatable" role="grid" style="border-color:black">
+        <thead class="bg-primary text-brown">
+          <tr role="row" style="background-color: #EEE3CB;">
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Titulo</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of employeedata">
+            <td>{{item.Id}}</td>
+            <td>{{item.FirstName}}</td>
+            <td>{{item.LastName}}</td>
+            <td>{{item.Title}}</td>
+            <td><button routerLink="editar/{{item.Id}}" class="btn btn-primary" style="background-color: #EEE3CB;color:rgb(94, 94, 184);">Editar</button> | <button
+                (click)="delete(item.Id)" class="btn btn-danger" style="background-color: #EEE3CB;color:brown;">Borrar</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      
+        <div class="crearButton">
+          <a routerLink="agregar" id="addbtn" class="btn btn-success btn-rounded" style="background-color: #EEE3CB; color:green;">Crear</a>
+        </div>
+      
+    </div>
+  </div>
+</div>

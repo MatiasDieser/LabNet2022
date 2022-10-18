@@ -1,0 +1,56 @@
+<div class="card-box">
+    <form [formGroup]="employeeForm" (ngSubmit)="SaveEmployee()">
+        <div class="row" style="text-align: center;display: block;">
+            <h2>Crear/Editar Empleado</h2>
+        </div>
+        <div class="row">
+            <div class="offset-lg-3 col-lg-6">
+                <div class="form-group">
+                    <label for="txtcode">Id</label>
+                    <input type="text" id="txtcode" class="form-control" formControlName="id" autocomplete="off" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="offset-lg-3 col-lg-6">
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text" class="form-control" formControlName="firstName" autocomplete="off" />
+                    <span *ngIf="firstName && firstName.invalid && firstName.touched" class="error">Ingrese un nombre válido</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="offset-lg-3 col-lg-6">
+                <div class="form-group">
+                    <label>Apellido</label>
+                    <input type="text" class="form-control" formControlName="lastName" autocomplete="off" />
+                    <span *ngIf="lastName && lastName.invalid && lastName.touched" class="error">Ingrese un apellido válido</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="offset-lg-3 col-lg-6">
+                <div class="form-group">
+                    <label>Título</label>
+                    <input type="text" class="form-control" formControlName="title" autocomplete="off" />
+                    <span *ngIf="title && title.invalid && title.touched" class="error">El campo titulo no puede contener más de 25 caracteres</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="offset-lg-3 col-lg-2">
+                <br>
+                <div class="form-group">
+                    <button routerLink="/empleados" class="btn btn-primary btn-lg btn-block" style="background-color: #EEE3CB;border-color:#5c524f;color:#5c524f;">Volver</button>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block" style="margin: 15px; border-color: green;color: green;background-color: #EEE3CB;">Submit</button>                    
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <br>
+                <span class={{messageclass}}>{{message}}</span>
+            </div>
+        </div>
+    </form>
+</div>

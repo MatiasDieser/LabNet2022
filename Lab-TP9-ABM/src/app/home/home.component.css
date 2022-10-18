@@ -1,0 +1,15 @@
+html,
+body{
+    margin: 0px;
+    margin-top: 200px;
+}
+.box{
+    position: absolute;
+    text-align: center;
+    color: #5c524f;
+    top: 40px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background-color: #EEE3CB;
+}
