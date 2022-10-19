@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http'
+import { map } from 'rxjs';
 
 
 @Injectable({
@@ -25,6 +26,8 @@ export class EmpleadosService {
     return this.http.post(this.apiUrl, data);
   }
   updateEmployees(Id: any, data:any){
-    return this.http.put<any>(this.apiUrl+'/'+Id, data);
+    return this.http.put<any>(this.apiUrl+'/'+Id, data).pipe(map((res:any)=>{
+      return res;
+    }));
   }
 }

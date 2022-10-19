@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { EmpleadosService } from '../service/empleados.service';
+import { AgregarempleadoComponent } from '../agregarempleado/agregarempleado.component';
 
 @Component({
   selector: 'app-listaempleados',
