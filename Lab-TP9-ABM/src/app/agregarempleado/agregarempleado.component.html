@@ -1,5 +1,5 @@
 <div class="card-box">
-    <form [formGroup]="employeeForm" (ngSubmit)="SaveEmployee()">
+    <form [formGroup]="employeeForm">
         <div class="row" style="text-align: center;display: block;">
             <h2>Crear/Editar Empleado</h2>
         </div>
@@ -42,14 +42,15 @@
         <div class="row">
             <div class="offset-lg-3 col-lg-2">
                 <br>
-                <div class="form-group">
+                <br>
+                <div>
                     <button routerLink="/empleados" class="btn btn-primary btn-lg btn-block" style="background-color: #EEE3CB;border-color:#5c524f;color:#5c524f;">Volver</button>
-                    <button type="submit" class="btn btn-primary btn-lg btn-block" style="margin: 15px; border-color: green;color: green;background-color: #EEE3CB;">Submit</button>
-                    <button type="button" onclick="UpdateEmployees()" class="btn btn-primary btn-lg btn-block" style="margin: 15px; border-color: blue;color: blue;background-color: #EEE3CB;">Update</button>                    
+                    <button type="submit" (click)="SaveEmployee()" class="btn btn-primary btn-lg btn-block" style="position:fixed;margin-left: 523px;border-color: green;color: green;background-color: #EEE3CB;">Submit</button>
+                    <button type="button" (click)="UpdateEmployees(employeeID)" class="btn btn-primary btn-lg btn-block" style="position:fixed;margin-left: 200px;border-color: blue;color: blue;background-color: #EEE3CB;">Update</button>                    
                 </div>
             </div>
             <div class="col-lg-3">
-                <br>
+                <br><br><br><br><br>
                 <span class={{messageclass}}>{{message}}</span>
             </div>
         </div>

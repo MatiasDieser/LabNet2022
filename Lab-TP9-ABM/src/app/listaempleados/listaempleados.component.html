@@ -19,7 +19,7 @@
             <td>{{item.FirstName}}</td>
             <td>{{item.LastName}}</td>
             <td>{{item.Title}}</td>
-            <td><button routerLink="editar/{{item.Id}}" onclick="edit()" class="btn btn-primary" style="background-color: #EEE3CB;color:rgb(94, 94, 184);">Editar</button> | <button
+            <td><button routerLink="editar/{{item.Id}}" class="btn btn-primary" style="background-color: #EEE3CB;color:rgb(94, 94, 184);">Editar</button> | <button
                 (click)="delete(item.Id)" class="btn btn-danger" style="background-color: #EEE3CB;color:brown;">Borrar</button></td>
           </tr>
         </tbody>

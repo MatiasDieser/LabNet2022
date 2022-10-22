@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './agregarempleado.component.html',
   styleUrls: ['./agregarempleado.component.css']
 })
+
 export class AgregarempleadoComponent implements OnInit {
 
   saveResp: any;
@@ -16,11 +17,10 @@ export class AgregarempleadoComponent implements OnInit {
   message = '';
   editRegister: any;
   employeeID: any;
+  
+
   constructor(private service: EmpleadosService, private route: ActivatedRoute) {
     this.employeeID = this.route.snapshot.paramMap.get('id');
-    if (this.employeeID != null && this.employeeID != 0) {
-      this.UpdateEmployees(this.employeeID);
-    }
   }
 
   ngOnInit(): void {
@@ -35,35 +35,29 @@ export class AgregarempleadoComponent implements OnInit {
     title: new FormControl('', Validators.maxLength(25))
   });
 
-  edit(data:any){
-    this.employeeForm.controls['firstName'].setValue(data.firstName);
-    this.employeeForm.controls['lastName'].setValue(data.lastName);
-    this.employeeForm.controls['title'].setValue(data.title);
-  }
 
   UpdateEmployees(Id: any) {
-    this.service.getEmployeesByID(Id).subscribe(resp => {
-      this.editRegister = resp;
-     if (this.editRegister != null) {
-      this.employeeForm = new FormGroup({
-         id: new FormControl(this.editRegister.id),
-         firstName: new FormControl(this.editRegister.firstName,Validators.compose([Validators.required, Validators.maxLength(25), Validators.pattern('^[A-Za-zñÑáéíóúÁÉÍÓÚ ]+$')])),
-         lastName: new FormControl(this.editRegister.lastName,Validators.compose([Validators.required, Validators.maxLength(25), Validators.pattern('^[A-Za-zñÑáéíóúÁÉÍÓÚ ]+$')])),
-         title: new FormControl(this.editRegister.title,Validators.maxLength(25))
+    
+    if (this.employeeID != null && this.employeeForm.valid) {
+      this.service.getEmployeesByID(this.employeeID).subscribe(resp => {
+        this.editRegister = resp;
+        this.employeeForm.controls['id'].setValue(this.employeeID);
+        this.employeeForm.controls['firstName'].setValue(this.editRegister.firstName);
+        this.employeeForm.controls['lastName'].setValue(this.editRegister.lastName);
+        this.employeeForm.controls['title'].setValue(this.editRegister.title);
+
       });
-      this.service.updateEmployees(this.employeeForm.value.id, this.employeeForm.value).subscribe(res=>{
-        this.employeeForm.reset();
-        alert('Registro editado correctamente');
-      },
-      err=>{
-alert('Error: falló el intento de actualizar el registro');
-      }
-      );
-     }
-   })
+      this.service.updateEmployees(this.employeeID, this.employeeForm.value).subscribe(res => {
+        this.saveResp = res;
+        this.message = "Registro guardado correctamente";
+        this.messageclass = 'success';
+      });
+    }
+    else {
+      this.message = "Error: el registro posee campos que no han sido validados";
+      this.messageclass = 'error';
+    }
   }
-
-
 
   SaveEmployee() {
     if (this.employeeForm.valid && this.employeeID === null) {
